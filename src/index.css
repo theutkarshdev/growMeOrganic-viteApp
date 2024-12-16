@@ -1,0 +1,49 @@
+.page-title {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 1rem;
+  & h1 {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+  & p {
+    font-size: 0.75rem;
+    margin: 0;
+  }
+}
+.custom-artwork-table {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+
+  & .custom-select-trigger {
+    position: absolute;
+    z-index: 1;
+    top: 0.4rem;
+    left: 2rem;
+    & .trigger-button {
+      width: 25px;
+      height: 25px;
+      box-shadow: none;
+    }
+  }
+  & .artwork-table-wrapper {
+    font-size: 0.8rem;
+    & th span {
+      white-space: nowrap;
+    }
+  }
+}
+
+.custom-select-box {
+  & input {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  & .custom-select-box-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+}
