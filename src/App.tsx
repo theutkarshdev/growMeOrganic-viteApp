@@ -65,32 +65,31 @@ const App: React.FC = () => {
   };
 
   const onSubmit = async () => {
-    // Parse the input value as a number
     const numberOfRows = Number(searchInput);
-
+  
     if (isNaN(numberOfRows) || numberOfRows <= 0) {
       console.error("Invalid number of rows");
       return;
     }
-
-    let selectedRows: Artwork[] = [];
-    let pagesToFetch = Math.ceil(numberOfRows / rows);
-
-    // Fetch rows from all pages
-    for (let i = 1; i <= pagesToFetch; i++) {
-      const { artworks: pageArtworks } = await productService.getArtworks(i, rows);
-      selectedRows = [...selectedRows, ...pageArtworks];
-
-      // Stop if we have selected enough rows
-      if (selectedRows.length >= numberOfRows) break;
+  
+    let fetchedRows: Artwork[] = [];
+    let totalFetched = 0;
+    let page = 1;
+  
+    while (totalFetched < numberOfRows) {
+      const { artworks: pageArtworks } = await productService.getArtworks(page, rows);
+      const rowsToTake = Math.min(numberOfRows - totalFetched, pageArtworks.length);
+      fetchedRows = [...fetchedRows, ...pageArtworks.slice(0, rowsToTake)];
+  
+      totalFetched += rowsToTake;
+      page += 1;
+      if (pageArtworks.length < rows) break;
     }
-
-    // Select only the number of rows specified by the user
-    selectedRows = selectedRows.slice(0, numberOfRows);
-
-    setSelectedArtworks(selectedRows); // Set selected artworks
+  
+    setSelectedArtworks(fetchedRows);
     op.current?.hide();
   };
+  
 
   return (
     <div>
